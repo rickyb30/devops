@@ -9,7 +9,6 @@ custom:
       db_port: 3306
       account_id: ${ssm:/${env:ENV}/account-id}
       region: ${ssm:/${env:ENV}/region}
-      frontend_app_url: ${ssm:/${env:ENV}/frontend-app-url}
     local: ${file(local_secrets.json)}
 provider:
   name: aws
