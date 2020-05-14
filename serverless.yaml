@@ -18,7 +18,7 @@ provider:
     name: ${ssm:/${env:ENV}/lambda-bucket}
   role: ${ssm:/${env:ENV}/lambda-role-arn}
   stage:  ${opt:stage,'dev'}
-  region: us-east-1
+  region: ${self:custom.secrets.region}
   vpc:
     securityGroupIds:
       - ${ssm:/${env:ENV}/lambda-sg}
