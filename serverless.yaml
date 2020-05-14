@@ -2,10 +2,9 @@ service: ${env:PRJ}-service
 custom:
   secrets:
     dev: 
-      db_name: ${ssm:/${env:ENV}/db-name}
-      db_user: ${ssm:/${env:ENV}/db-user}
+      db_creds: ${ssm:/aws/reference/secretsmanager/${env:ENV}/rds-secret~true}
       db_host: ${ssm:/${env:ENV}/db-host}
-      db_password: ${ssm:/${env:ENV}/db-password}
+      db_name: ${ssm:/${env:ENV}/db-name}
       db_port: 3306
       account_id: ${ssm:/${env:ENV}/account-id}
       region: ${ssm:/${env:ENV}/region}
@@ -26,8 +25,8 @@ provider:
       - ${ssm:/${env:ENV}/private-subnet-2}
   environment:
     DB_NAME: ${self:custom.secrets.${self:provider.stage}.db_name}
-    DB_USER: ${self:custom.secrets.${self:provider.stage}.db_user}
-    DB_PASSWORD: ${self:custom.secrets.${self:provider.stage}.db_password}
+    DB_USER: ${self:custom.secrets.${self:provider.stage}.db_creds.username}
+    DB_PASSWORD: ${self:custom.secrets.${self:provider.stage}.db_creds.password}
     DB_HOST: ${self:custom.secrets.${self:provider.stage}.db_host}
     DB_PORT: ${self:custom.secrets.${self:provider.stage}.db_port}
     ACCOUNT_ID: ${self:custom.secrets.${self:provider.stage}.account_id}
